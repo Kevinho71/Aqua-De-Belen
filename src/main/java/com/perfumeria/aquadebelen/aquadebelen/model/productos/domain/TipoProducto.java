@@ -31,4 +31,8 @@ public class TipoProducto {
     @OneToMany(mappedBy = "tipoProducto")
     private List<Producto> productos;
 
+    public TipoProducto(String nombre){
+        this.nombre=nombre;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.Cliente;
@@ -14,7 +13,6 @@ public class ClienteDAOImpl implements ClienteDAO {
 
     private EntityManager entityManager;
 
-    @Autowired
     public ClienteDAOImpl(EntityManager entityManager){
         this.entityManager=entityManager;
     }
@@ -23,6 +21,11 @@ public class ClienteDAOImpl implements ClienteDAO {
     @Override
     public void save(Cliente cliente) {
         entityManager.persist(cliente);
+    }
+
+    @Override
+    public Cliente findById(Integer id) {
+        return entityManager.find(Cliente.class, id);
     }
 
 }

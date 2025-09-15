@@ -29,7 +29,13 @@ public class Factura {
     @Column(name="fecha_de_emision")
     private LocalDateTime fechaEmision;
 
+    @Column(name="razon_social")
+    private String razonSocial;
+
+    @Column(name="nit")
+    private String nit;
+
     @OneToOne
-    @JoinColumn(name = "transaccion_id")
+    @JoinColumn(name = "transaccion_id", unique=true, nullable = false)
     private Transaccion transaccion;
 }
