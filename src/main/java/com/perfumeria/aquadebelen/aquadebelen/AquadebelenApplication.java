@@ -1,22 +1,15 @@
 package com.perfumeria.aquadebelen.aquadebelen;
 
-import java.time.LocalDateTime;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.Cliente;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.NivelFidelidad;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.Ubicacion;
 import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.ClienteDAO;
 import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.NivelFidelidadDAO;
 import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.UbicacionDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.productos.domain.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.model.productos.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.model.productos.repository.TipoProductoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.transaccion.domain.Transaccion;
 import com.perfumeria.aquadebelen.aquadebelen.model.transaccion.repository.MetodoDePagoDAO;
 
 @SpringBootApplication
