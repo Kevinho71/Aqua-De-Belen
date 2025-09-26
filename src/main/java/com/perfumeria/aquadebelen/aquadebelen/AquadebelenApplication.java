@@ -1,23 +1,16 @@
 package com.perfumeria.aquadebelen.aquadebelen;
 
-import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.Cliente;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.NivelFidelidad;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.domain.Ubicacion;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.ClienteDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.NivelFidelidadDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.clientes.repository.UbicacionDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.productos.domain.Producto;
-import com.perfumeria.aquadebelen.aquadebelen.model.productos.repository.ProductoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.productos.repository.TipoProductoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.model.transaccion.domain.Transaccion;
-import com.perfumeria.aquadebelen.aquadebelen.model.transaccion.repository.MetodoDePagoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
+import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.NivelFidelidadDAO;
+import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.UbicacionDAO;
+import com.perfumeria.aquadebelen.aquadebelen.productos.repository.ProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.productos.repository.TipoProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.transaccion.repository.MetodoDePagoDAO;
 
 @SpringBootApplication
 public class AquadebelenApplication {
@@ -29,6 +22,8 @@ public class AquadebelenApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ProductoDAO productoDAO, TipoProductoDAO tipoProductoDAO, ClienteDAO clienteDAO, NivelFidelidadDAO nivelFidelidadDAO, UbicacionDAO ubicacionDAO, MetodoDePagoDAO metodoDePagoDAO){
 		return runner -> {
+			
+
 			/*Cliente cliente = new Cliente("Kevin", "Guzman", "60259580","12594527",
 											"Calle General Trigo entre 15 de Agosto y 14 de Julio" ,
 											nivelFidelidadDAO.findById(1), ubicacionDAO.findById(2));
