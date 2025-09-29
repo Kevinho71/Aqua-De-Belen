@@ -22,6 +22,7 @@ public class TransaccionDAOImpl implements TransaccionDAO {
     @Transactional
     @Override
     public void register(Transaccion transaccion) {
+       
         entityManager.persist(transaccion);
     }
 
@@ -50,5 +51,11 @@ public class TransaccionDAOImpl implements TransaccionDAO {
          return lista;
     }
 
+    @Override
+    public Integer nextId() {
+        TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(t.id), 0) FROM Transaccion t ", Integer.class);
+        return query.getSingleResult()+1;
+ 
+    }
 
 }

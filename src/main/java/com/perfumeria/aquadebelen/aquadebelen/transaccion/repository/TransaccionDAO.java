@@ -10,4 +10,6 @@ public interface TransaccionDAO {
     Transaccion findById(Integer id);
     void deleteById(Integer id);
     List<Transaccion> findALL();
+
+    Integer nextId ();
 }

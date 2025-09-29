@@ -51,6 +51,7 @@ public class TransaccionService {
         double totalBruto = calcularTotalBruto(req.detalles());
         double totalNeto = totalBruto - descuento;
         boolean conFactura = req.conFactura();
+        Integer id = tDAO.nextId();
 
         agregarDetalles(req.detalles(), transaccion);
 
@@ -64,7 +65,7 @@ public class TransaccionService {
             transaccion.setFactura(factura);
         }*/
 
-        guardarTransaccion(transaccion, cliente, metodoDePago, descuento, fecha, totalNeto, totalBruto, conFactura);
+        guardarTransaccion(transaccion, cliente, metodoDePago, descuento, fecha, totalNeto, totalBruto, conFactura, id);
         return new TransaccionResponse(transaccion.getId(), transaccion.getTotalBruto(), transaccion.getDescuento(),
                 transaccion.getTotalNeto(), transaccion.isConFactura());
 
@@ -116,7 +117,7 @@ public class TransaccionService {
     }
 
     public void guardarTransaccion(Transaccion transaccion, Cliente cliente, MetodoDePago metodoDePago,
-            double descuento, LocalDateTime fecha, double totalNeto, double totalBruto, boolean conFactura) {
+            double descuento, LocalDateTime fecha, double totalNeto, double totalBruto, boolean conFactura, Integer id) {
         transaccion.setCliente(cliente);
         transaccion.setMetodoDePago(metodoDePago);
         transaccion.setDescuento(descuento);
@@ -124,6 +125,7 @@ public class TransaccionService {
         transaccion.setTotalNeto(totalNeto);
         transaccion.setTotalBruto(totalBruto);
         transaccion.setConFactura(conFactura);
+        transaccion.setId(id);
         tDAO.register(transaccion);
     }
 
