@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.perfumeria.aquadebelen.aquadebelen.clientes.model.Cliente;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
 import com.perfumeria.aquadebelen.aquadebelen.productos.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.productos.repository.ProductoDAO;
@@ -14,13 +13,9 @@ import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.DetalleTransaccion
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.TransaccionRequest;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.TransaccionResponse;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.DetalleTransaccion;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.Factura;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.MetodoDePago;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.Transaccion;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.repository.MetodoDePagoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.repository.TransaccionDAO;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class TransaccionService {
@@ -36,55 +31,35 @@ public class TransaccionService {
         this.pDAO = pDAO;
     }
 
-    @Transactional
-    public TransaccionResponse registrar(TransaccionRequest req) {
 
-        // CREAMOS UNA NUEVA TRANSACCION A LA QUE IREMOS ASIGNANDO SUS RESPECTIVOS
-        // VALORES SACADOS DEL DTO
+      public TransaccionResponse store(TransaccionRequest req) {
         Transaccion transaccion = new Transaccion();
-
-        // ASIGNAMOS A VARIABLES TEMPORALES LOS VALORES DEL DTO DE TRANSACCION
-        MetodoDePago metodoDePago = mpDAO.findById(req.metodoDePagoId());
-        Cliente cliente = cDAO.findById(req.clienteId());
-        double descuento = req.descuento();
-        LocalDateTime fecha = LocalDateTime.now();
-        double totalBruto = calcularTotalBruto(req.detalles());
-        double totalNeto = totalBruto - descuento;
-        boolean conFactura = req.conFactura();
-        Integer id = tDAO.nextId();
-
-        agregarDetalles(req.detalles(), transaccion);
-
-       /* // FACTURA OPCIONAL
-        if (req.conFactura()) {
-            Factura factura = new Factura();
-            factura.setFechaEmision(LocalDateTime.now());
-            factura.setRazonSocial(req.factura().razonSocial());
-            factura.setNit(cliente.getNitCi());
-            factura.setTransaccion(transaccion);
-            transaccion.setFactura(factura);
-        }*/
-
-        guardarTransaccion(transaccion, cliente, metodoDePago, descuento, fecha, totalNeto, totalBruto, conFactura, id);
-        return new TransaccionResponse(transaccion.getId(), transaccion.getTotalBruto(), transaccion.getDescuento(),
-                transaccion.getTotalNeto(), transaccion.isConFactura());
-
-    }
-
-    public TransaccionResponse editar(TransaccionRequest req) {
-        Transaccion transaccion = tDAO.findById(req.transaccionId());
-        transaccion.setCliente(cDAO.findById(req.clienteId()));
-        transaccion.setMetodoDePago(mpDAO.findById(req.metodoDePagoId()));
-        transaccion.setDescuento(req.descuento());
-        transaccion.setTotalBruto(calcularTotalBruto(req.detalles()));
-        transaccion.setTotalNeto(transaccion.getTotalBruto() - transaccion.getDescuento());
-        transaccion.setConFactura(req.conFactura());
-        actualizarDetalles(req.detalles(), transaccion);
-
-        tDAO.edit(transaccion);
+        if (req.transaccionId() == null) {
+            transaccion.setId(tDAO.nextId());
+            transaccion.setCliente(cDAO.findById(req.clienteId()));
+            transaccion.setFecha(LocalDateTime.now());
+            transaccion.setDescuento(req.descuento());
+            transaccion.setTotalBruto(calcularTotalBruto(req.detalles()));
+            transaccion.setTotalNeto(transaccion.getTotalBruto() - transaccion.getDescuento());
+            transaccion.setMetodoDePago(mpDAO.findById(req.metodoDePagoId()));
+            transaccion.setConFactura(req.conFactura());
+            agregarDetalles(req.detalles(), transaccion);
+            tDAO.store(transaccion);
+        } else {
+            transaccion = tDAO.findById(req.transaccionId());
+            transaccion.setCliente(cDAO.findById(req.clienteId()));
+            transaccion.setMetodoDePago(mpDAO.findById(req.metodoDePagoId()));
+            transaccion.setDescuento(req.descuento());
+            transaccion.setTotalBruto(calcularTotalBruto(req.detalles()));
+            transaccion.setTotalNeto(transaccion.getTotalBruto() - transaccion.getDescuento());
+            transaccion.setConFactura(req.conFactura());
+            actualizarDetalles(req.detalles(), transaccion);
+            tDAO.store(transaccion);
+        }
         return new TransaccionResponse(transaccion.getId(), transaccion.getTotalBruto(), transaccion.getDescuento(),
                 transaccion.getTotalNeto(), transaccion.isConFactura());
     }
+
 
     public double calcularTotalBruto(List<DetalleTransaccionRequest> detalles) {
         double totalBruto = 0;
@@ -116,18 +91,6 @@ public class TransaccionService {
 
     }
 
-    public void guardarTransaccion(Transaccion transaccion, Cliente cliente, MetodoDePago metodoDePago,
-            double descuento, LocalDateTime fecha, double totalNeto, double totalBruto, boolean conFactura, Integer id) {
-        transaccion.setCliente(cliente);
-        transaccion.setMetodoDePago(metodoDePago);
-        transaccion.setDescuento(descuento);
-        transaccion.setFecha(fecha);
-        transaccion.setTotalNeto(totalNeto);
-        transaccion.setTotalBruto(totalBruto);
-        transaccion.setConFactura(conFactura);
-        transaccion.setId(id);
-        tDAO.register(transaccion);
-    }
 
     // BORRAR UNA TRANSACCION
     public void borrar(TransaccionRequest req) {
@@ -145,11 +108,14 @@ public class TransaccionService {
     public List<TransaccionResponse> listar() {
         List<Transaccion> lista = tDAO.findALL();
         List<TransaccionResponse> listaResp = new ArrayList<>();
-        for(Transaccion t:lista){
-            TransaccionResponse e = new TransaccionResponse(t.getId(), t.getTotalBruto(), t.getDescuento(), t.getTotalNeto(),  t.isConFactura());
+        for (Transaccion t : lista) {
+            TransaccionResponse e = new TransaccionResponse(t.getId(), t.getTotalBruto(), t.getDescuento(),
+                    t.getTotalNeto(), t.isConFactura());
             listaResp.add(e);
         }
         return listaResp;
     }
+
+  
 
 }

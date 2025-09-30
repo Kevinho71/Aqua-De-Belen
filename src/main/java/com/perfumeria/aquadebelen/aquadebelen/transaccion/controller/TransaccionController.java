@@ -33,13 +33,13 @@ public class TransaccionController {
 
     @PostMapping("/registrar")
     public ResponseEntity<TransaccionResponse> registrar(@RequestBody TransaccionRequest req){
-        TransaccionResponse resp = transaccionService.registrar(req);
+        TransaccionResponse resp = transaccionService.store(req);
         return ResponseEntity.ok(resp);
     }
 
     @PutMapping("/editar")
     public ResponseEntity<TransaccionResponse> editar(@RequestBody TransaccionRequest req) {
-        TransaccionResponse resp = transaccionService.editar(req);
+        TransaccionResponse resp = transaccionService.store(req);
         return ResponseEntity.ok(resp);
     }
 

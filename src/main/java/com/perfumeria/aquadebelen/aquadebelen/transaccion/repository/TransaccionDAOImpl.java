@@ -21,14 +21,7 @@ public class TransaccionDAOImpl implements TransaccionDAO {
 
     @Transactional
     @Override
-    public void register(Transaccion transaccion) {
-       
-        entityManager.persist(transaccion);
-    }
-
-    @Transactional
-    @Override
-    public void edit(Transaccion transaccion) {
+    public void store(Transaccion transaccion) {
         entityManager.merge(transaccion);
     }
 
