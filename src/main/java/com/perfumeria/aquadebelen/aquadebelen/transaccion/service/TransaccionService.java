@@ -56,8 +56,8 @@ public class TransaccionService {
             actualizarDetalles(req.detalles(), transaccion);
             tDAO.store(transaccion);
         }
-        return new TransaccionResponse(transaccion.getId(), transaccion.getTotalBruto(), transaccion.getDescuento(),
-                transaccion.getTotalNeto(), transaccion.isConFactura());
+        return new TransaccionResponse(transaccion.getId(),transaccion.getCliente().getNombre(), transaccion.getTotalBruto(), transaccion.getDescuento(),
+                transaccion.getTotalNeto(), transaccion.isConFactura(), transaccion.getFecha());
     }
 
 
@@ -101,21 +101,21 @@ public class TransaccionService {
     // BUSCAR UNA TRANSACCION
     public TransaccionResponse buscar(Integer id) {
         Transaccion transaccion = tDAO.findById(id);
-        return new TransaccionResponse(transaccion.getId(), transaccion.getTotalBruto(), transaccion.getDescuento(),
-                transaccion.getTotalNeto(), transaccion.isConFactura());
+        return new TransaccionResponse(transaccion.getId(), transaccion.getCliente().getNombre(),transaccion.getTotalBruto(), transaccion.getDescuento(),
+                transaccion.getTotalNeto(), transaccion.isConFactura(), transaccion.getFecha());
     }
 
     public List<TransaccionResponse> listar() {
         List<Transaccion> lista = tDAO.findALL();
         List<TransaccionResponse> listaResp = new ArrayList<>();
         for (Transaccion t : lista) {
-            TransaccionResponse e = new TransaccionResponse(t.getId(), t.getTotalBruto(), t.getDescuento(),
-                    t.getTotalNeto(), t.isConFactura());
+            TransaccionResponse e = new TransaccionResponse(t.getId(),t.getCliente().getNombre(), t.getTotalBruto(), t.getDescuento(),
+                    t.getTotalNeto(), t.isConFactura(), t.getFecha());
             listaResp.add(e);
         }
         return listaResp;
     }
 
-  
+    
 
 }

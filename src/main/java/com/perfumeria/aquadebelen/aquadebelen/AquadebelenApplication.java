@@ -1,6 +1,9 @@
 package com.perfumeria.aquadebelen.aquadebelen;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,6 +41,13 @@ public class AquadebelenApplication {
 			productoDAO.save(producto1);
 			productoDAO.save(producto2);
 			productoDAO.save(producto3);*/
+
+			/* 
+			LocalDateTime fecha = LocalDateTime.now();
+			System.out.println(fecha);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String formattedDateTime = fecha.format(formatter);
+			System.out.println(formattedDateTime);*/
 		};
 	}
 
