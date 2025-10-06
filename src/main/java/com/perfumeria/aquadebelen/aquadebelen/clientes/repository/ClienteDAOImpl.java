@@ -1,0 +1,31 @@
+package com.perfumeria.aquadebelen.aquadebelen.clientes.repository;
+
+import org.springframework.stereotype.Repository;
+
+import com.perfumeria.aquadebelen.aquadebelen.clientes.model.Cliente;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+
+
+@Repository
+public class ClienteDAOImpl implements ClienteDAO {
+
+    private EntityManager entityManager;
+
+    public ClienteDAOImpl(EntityManager entityManager){
+        this.entityManager=entityManager;
+    }
+
+    @Transactional
+    @Override
+    public void save(Cliente cliente) {
+        entityManager.persist(cliente);
+    }
+
+    @Override
+    public Cliente findById(Integer id) {
+        return entityManager.find(Cliente.class, id);
+    }
+
+}
