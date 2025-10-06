@@ -3,15 +3,25 @@ package com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public record TransaccionRequest(
-    Integer transaccionId,
+
+    @NotNull
     Integer clienteId,
-    double descuento,
-    LocalDateTime fecha,
+
+    @NotNull
     Integer metodoDePagoId,
+
     boolean conFactura,
-    List<DetalleTransaccionRequest> detalles,
-    FacturaRequest factura
+
+    @NotNull
+    @NotEmpty
+    @Valid
+    List<DetalleTransaccionRequest> detalles
+
 ) {
 
 

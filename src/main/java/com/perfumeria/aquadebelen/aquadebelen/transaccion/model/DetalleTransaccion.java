@@ -31,6 +31,12 @@ import jakarta.persistence.Column;
         @Column(name = "cantidad")
         private double cantidad;
 
+        @Column(name = "subtotal")
+        private double subtotal;
+
+        @Column(name = "descuento")
+        private double descuento;
+
         @ManyToOne
         @JoinColumn(name = "producto_id")
         private Producto producto;
@@ -38,4 +44,12 @@ import jakarta.persistence.Column;
         @ManyToOne
         @JoinColumn(name = "transaccion_id")
         private Transaccion transaccion;
+
+        @Override
+        public String toString() {
+            return "DetalleTransaccion [id=" + id + ", cantidad=" + cantidad + ", subtotal=" + subtotal + ", producto="
+                    + producto + ", transaccion=" + transaccion.getId() + "]";
+        }
+
+        
     }

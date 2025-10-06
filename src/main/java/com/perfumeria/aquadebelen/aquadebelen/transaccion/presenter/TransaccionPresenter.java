@@ -1,15 +1,21 @@
 package com.perfumeria.aquadebelen.aquadebelen.transaccion.presenter;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.DetalleTransaccionResponse;
 import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.TransaccionResponse;
+import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.DetalleTransaccionViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.ListTransaccionViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.TransaccionViewModel;
 
 @Component
 public class TransaccionPresenter {
+
     String transaccionId;
     String cliente;
     String totalBruto;
@@ -18,38 +24,73 @@ public class TransaccionPresenter {
     String conFactura;
     String fecha;
 
-    public TransaccionPresenter format(TransaccionResponse resp) {
-        TransaccionPresenter pres = new TransaccionPresenter();
-        pres.setTransaccionId(String.valueOf(resp.transaccionId()));
-        pres.setCliente(resp.cliente().toString());
-        pres.setTotalBruto(String.valueOf(resp.totalBruto()) + " Bs");
-        pres.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
-        pres.setDescuento(String.valueOf(resp.descuento()) + " Bs");
+    public TransaccionViewModel present(TransaccionResponse resp) {
+        TransaccionViewModel tvm = new TransaccionViewModel();
+        tvm.setTransaccionId(String.valueOf(resp.transaccionId()));
+        tvm.setCliente(resp.cliente().toString());
+        tvm.setTotalBruto(String.valueOf(resp.totalBruto()) + " Bs");
+        tvm.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
+        tvm.setdescuentoTotal(String.valueOf(resp.descuentoTotal()) + " Bs");
 
-        if (resp.conFactura() == true) {
-            pres.setConFactura("Con factura");
-        } else {
-            pres.setConFactura("Sin factura");
+        tvm.setConFactura(formatFactura(resp.conFactura()));
+        tvm.setFecha(formatFecha(resp.fecha()));
+        tvm.setDetalles(presentDetalles(resp.detalles()));
+
+        return tvm;
+    }
+
+    public List<DetalleTransaccionViewModel> presentDetalles(List<DetalleTransaccionResponse> listResp) {
+        List<DetalleTransaccionViewModel> dtvm = new ArrayList<>();
+        for (DetalleTransaccionResponse dtr : listResp) {
+            DetalleTransaccionViewModel d = new DetalleTransaccionViewModel();
+            d.setIdDetalle(String.valueOf(dtr.detalleId()));
+            d.setProducto(dtr.producto());
+            d.setCostoUnitario(String.valueOf(dtr.costoUnitario()) + " Bs");
+            d.setCantidad(String.valueOf(dtr.cantidad()) + " u");
+            d.setDescuento(String.valueOf(dtr.descuento()) + " Bs");
+            d.setSubtotal(String.valueOf(dtr.subtotal()) + " Bs");
+
+            dtvm.add(d);
         }
 
+        return dtvm;
+    }
+
+    public List<ListTransaccionViewModel> presentList(List<TransaccionResponse> listaResp) {
+        List<ListTransaccionViewModel> lista = new ArrayList<>();
+        for (TransaccionResponse resp : listaResp) {
+            ListTransaccionViewModel listPres = new ListTransaccionViewModel();
+            listPres.setTransaccionId(String.valueOf(resp.transaccionId()));
+            listPres.setCliente(resp.cliente());
+            listPres.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
+            listPres.setConFactura(formatFactura(resp.conFactura()));
+            listPres.setFecha(formatFecha(resp.fecha()));
+            lista.add(listPres);
+
+        }
+        return lista;
+    }
+
+    public String formatFecha(LocalDateTime fecha) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        pres.setFecha(resp.fecha().format(formatter)); 
+        String formattedFecha = fecha.format(formatter);
 
-        return pres;
+        return formattedFecha;
     }
 
-    public List<TransaccionPresenter> formatList(List<TransaccionResponse> listaResp){
-        List<TransaccionPresenter> listPres = new ArrayList<>();
-        for(TransaccionResponse resp : listaResp){
-            TransaccionPresenter pres = format(resp);
-            listPres.add(pres);
+    public String formatFactura(Boolean factura) {
+        String formattedFactura;
+        if (factura == true) {
+            formattedFactura = "Con factura";
+        } else {
+            formattedFactura = "Sin factura";
         }
-        return listPres;
+
+        return formattedFactura;
     }
 
-    public TransaccionPresenter(){
-
-    }
+    // ====================================================================================================================
+    // CONSTRUCTORES, GETTERS Y SETTERS
 
     public TransaccionPresenter(String transaccionId, String cliente, String totalBruto, String descuento,
             String totalNeto, String conFactura, String fecha) {
@@ -60,6 +101,10 @@ public class TransaccionPresenter {
         this.totalNeto = totalNeto;
         this.conFactura = conFactura;
         this.fecha = fecha;
+    }
+
+    public TransaccionPresenter() {
+
     }
 
     public String getTransaccionId() {

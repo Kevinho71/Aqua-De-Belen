@@ -9,6 +9,7 @@ import com.perfumeria.aquadebelen.aquadebelen.clientes.model.Cliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,8 +39,8 @@ public class Transaccion {
     @Column(name = "total_bruto")
     private double totalBruto;
 
-    @Column(name = "descuento")
-    private double descuento;
+    @Column(name = "descuento_total")
+    private double descuentoTotal;
 
     @Column(name="total_neto")
     private double totalNeto;
@@ -55,9 +56,11 @@ public class Transaccion {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+   
     @OneToMany(mappedBy = "transaccion" ,
                 cascade = CascadeType.ALL,
-                orphanRemoval = true)
+                orphanRemoval = true,
+                fetch = FetchType.LAZY)
     private List<DetalleTransaccion> detallesTransaccion;
 
     @OneToOne(mappedBy = "transaccion",
@@ -65,9 +68,9 @@ public class Transaccion {
     private Factura factura;
 
     //El monto se calculara en base a los detalles de transaccion
-    public Transaccion(LocalDateTime fecha, double descuento, MetodoDePago metodoDePago, Cliente cliente, boolean conFactura) {
+    public Transaccion(LocalDateTime fecha, double descuentoTotal, MetodoDePago metodoDePago, Cliente cliente, boolean conFactura) {
         this.fecha = fecha;
-        this.descuento = descuento;
+        this.descuentoTotal = descuentoTotal;
         this.metodoDePago = metodoDePago;
         this.cliente = cliente;
         this.conFactura = conFactura;
@@ -84,5 +87,12 @@ public class Transaccion {
 
     }
 
-    
+     @Override
+    public String toString() {
+        return "Transaccion [id=" + id + ", fecha=" + fecha + ", totalBruto=" + totalBruto + ", descuentoTotal=" + descuentoTotal
+                + ", totalNeto=" + totalNeto + ", conFactura=" + conFactura + ", metodoDePago=" + metodoDePago
+                + ", cliente=" + cliente + ", detallesTransaccion=" + detallesTransaccion + ", factura=" + factura
+                + "]";
+    }
+
 }

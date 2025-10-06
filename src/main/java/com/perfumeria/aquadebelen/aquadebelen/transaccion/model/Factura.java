@@ -38,4 +38,12 @@ public class Factura {
     @OneToOne
     @JoinColumn(name = "transaccion_id", unique=true, nullable = false)
     private Transaccion transaccion;
+
+    @Override
+    public String toString() {
+        return "Factura [numero=" + numero + ", fechaEmision=" + fechaEmision + ", razonSocial=" + razonSocial
+                + ", nit=" + nit + ", transaccion=" + transaccion + "]";
+    }
+
+    
 }

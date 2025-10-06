@@ -5,7 +5,10 @@ public record DetalleTransaccionResponse(
     Integer transaccionId,
     Integer detalleId,
     String producto,
-    double cantidad
+    double costoUnitario,
+    double cantidad,
+    double descuento,
+    double subtotal
 
 ) {
 

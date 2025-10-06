@@ -4,5 +4,5 @@ import com.perfumeria.aquadebelen.aquadebelen.productos.model.Producto;
 
 public interface ProductoDAO {
     Producto findById(Integer id);
-    void save(Producto producto);
+    void store(Producto producto);
 }
