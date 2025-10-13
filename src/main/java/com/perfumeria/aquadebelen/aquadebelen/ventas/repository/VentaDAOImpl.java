@@ -31,7 +31,7 @@ public class VentaDAOImpl implements VentaDAO {
     @Override
     public Venta findById(Integer id) {
         TypedQuery<Venta> query = entityManager.createQuery(
-                "SELECT t FROM Venta t" + " JOIN FETCH t.detallesVenta" + " JOIN FETCH t.metodoDePago"
+                "SELECT t FROM Venta t" + " JOIN FETCH t.detallesVentas" + " JOIN FETCH t.metodoDePago"
                         + " WHERE t.id =:data",
                 Venta.class);
         query.setParameter("data", id);

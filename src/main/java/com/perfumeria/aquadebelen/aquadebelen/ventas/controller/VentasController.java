@@ -37,14 +37,14 @@ public class VentasController {
         this.VentaPresenter = VentaPresenter;
     }
 
-    @PostMapping("/transacciones")
+    @PostMapping("/ventas")
     public ResponseEntity<VentaViewModel> registrar(@Valid @RequestBody VentaRequest req) {
         VentaResponse resp = VentaService.store(null, req);
         VentaViewModel tvm = VentaPresenter.present(resp);
         return ResponseEntity.ok(tvm);  
     }
 
-    @PutMapping("/transacciones/{id}")
+    @PutMapping("/ventas/{id}")
     public ResponseEntity<VentaViewModel> editar(@Valid @RequestBody VentaRequest req, @PathVariable("id") @Min(1) Integer id) {
         VentaResponse resp = VentaService.store(id, req);
         VentaViewModel tvm = VentaPresenter.present(resp);
@@ -52,19 +52,19 @@ public class VentasController {
         return ResponseEntity.ok(tvm);
     }
 
-    @DeleteMapping("/transacciones/{id}")
+    @DeleteMapping("/ventas/{id}")
     public void borrar(@PathVariable("id") @Min(1) Integer id) {
         VentaService.borrar(id);
     }
 
-    @GetMapping("/transacciones")
+    @GetMapping("/ventas")
     public ResponseEntity<List<ListVentaViewModel>> listar() {
         List<VentaResponse> resp = VentaService.listar();
         List<ListVentaViewModel> ltvm = VentaPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }
 
-    @GetMapping("/transacciones/{id}")
+    @GetMapping("/ventas/{id}")
     public ResponseEntity<VentaViewModel> buscar(@PathVariable("id") @Min(1) Integer id) {
         VentaResponse resp = VentaService.buscar(id);
        VentaViewModel tvm = VentaPresenter.present(resp);
