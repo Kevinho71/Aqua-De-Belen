@@ -1,18 +1,18 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.DTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-public record TransaccionResponse(
-     Integer transaccionId,
+public record VentaResponse(
+     Integer ventaId,
      String cliente,
     double totalBruto,
     double descuentoTotal,
     double totalNeto,
     Boolean conFactura,
     LocalDateTime fecha,
-    List<DetalleTransaccionResponse> detalles
+    List<DetalleVentaResponse> detalles
 ) {
    
 }

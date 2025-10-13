@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class TransaccionViewModel {
-    String transaccionId;
+public class VentaViewModel {
+    String ventaId;
     String cliente;
     String totalBruto;
     String descuentoTotal;
     String totalNeto;
     String conFactura;
     String fecha;
-    List<DetalleTransaccionViewModel> detalles;
+    List<DetalleVentaViewModel> detalles;
 
     /*public TransaccionViewModel(TransaccionPresenter pres){
-        this.transaccionId=pres.getTransaccionId();
+        this.ventaId=pres.getventaId();
         this.cliente=pres.getCliente();
         this.totalBruto=pres.getTotalBruto();
         this.descuentoTotal=pres.getdescuentoTotal();
@@ -27,7 +27,7 @@ public class TransaccionViewModel {
         this.fecha=pres.getFecha();
     }*/
 
-    public TransaccionViewModel(){};
+    public VentaViewModel(){};
 
     /*public List<TransaccionViewModel> list (List<TransaccionPresenter> listPres){
         List<TransaccionViewModel> lista = new ArrayList<>();
@@ -39,16 +39,16 @@ public class TransaccionViewModel {
         return lista;
     }*/
 
-    public void add(DetalleTransaccionViewModel d){
+    public void add(DetalleVentaViewModel d){
         if(this.detalles == null){
-            List<DetalleTransaccionViewModel> lista = new ArrayList<>();
+            List<DetalleVentaViewModel> lista = new ArrayList<>();
             this.setDetalles(lista);
         }
         detalles.add(d);
     }
 
-    public String getTransaccionId() {
-        return transaccionId;
+    public String getventaId() {
+        return ventaId;
     }
 
     public String getCliente() {
@@ -75,16 +75,16 @@ public class TransaccionViewModel {
         return fecha;
     }
 
-    public List<DetalleTransaccionViewModel> getDetalles() {
+    public List<DetalleVentaViewModel> getDetalles() {
         return detalles;
     }
 
-    public void setDetalles(List<DetalleTransaccionViewModel> detalles) {
+    public void setDetalles(List<DetalleVentaViewModel> detalles) {
         this.detalles = detalles;
     }
 
-    public void setTransaccionId(String transaccionId) {
-        this.transaccionId = transaccionId;
+    public void setVentaId(String ventaId) {
+        this.ventaId = ventaId;
     }
 
     public void setCliente(String cliente) {

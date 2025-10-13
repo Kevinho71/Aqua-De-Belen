@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.model;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "transaccion")
-public class Transaccion {
+@Table(name = "venta")
+public class Venta {
 
     @Id
     @Column(name = "id")
@@ -57,18 +57,18 @@ public class Transaccion {
     private Cliente cliente;
 
    
-    @OneToMany(mappedBy = "transaccion" ,
+    @OneToMany(mappedBy = "venta" ,
                 cascade = CascadeType.ALL,
                 orphanRemoval = true,
                 fetch = FetchType.LAZY)
-    private List<DetalleTransaccion> detallesTransaccion;
+    private List<DetalleVenta> detallesVentas;
 
-    @OneToOne(mappedBy = "transaccion",
+    @OneToOne(mappedBy = "venta",
                 cascade = CascadeType.PERSIST)
     private Factura factura;
 
-    //El monto se calculara en base a los detalles de transaccion
-    public Transaccion(LocalDateTime fecha, double descuentoTotal, MetodoDePago metodoDePago, Cliente cliente, boolean conFactura) {
+    //El monto se calculara en base a los detalles de venta
+    public Venta(LocalDateTime fecha, double descuentoTotal, MetodoDePago metodoDePago, Cliente cliente, boolean conFactura) {
         this.fecha = fecha;
         this.descuentoTotal = descuentoTotal;
         this.metodoDePago = metodoDePago;
@@ -76,14 +76,14 @@ public class Transaccion {
         this.conFactura = conFactura;
     }
 
-    public void addDetalle (DetalleTransaccion d){
-        if (this.detallesTransaccion==null){
-            List<DetalleTransaccion> detalles= new ArrayList<>();
-            this.setDetallesTransaccion(detalles); {       
+    public void addDetalle (DetalleVenta d){
+        if (this.detallesVentas==null){
+            List<DetalleVenta> detalles= new ArrayList<>();
+            this.setDetallesVentas(detalles); {       
             };
         }
-        detallesTransaccion.add(d);
-        d.setTransaccion(this);
+        detallesVentas.add(d);
+        d.setVenta(this);
 
     }
 
@@ -91,7 +91,7 @@ public class Transaccion {
     public String toString() {
         return "Transaccion [id=" + id + ", fecha=" + fecha + ", totalBruto=" + totalBruto + ", descuentoTotal=" + descuentoTotal
                 + ", totalNeto=" + totalNeto + ", conFactura=" + conFactura + ", metodoDePago=" + metodoDePago
-                + ", cliente=" + cliente + ", detallesTransaccion=" + detallesTransaccion + ", factura=" + factura
+                + ", cliente=" + cliente + ", detallesVentas=" + detallesVentas + ", factura=" + factura
                 + "]";
     }
 

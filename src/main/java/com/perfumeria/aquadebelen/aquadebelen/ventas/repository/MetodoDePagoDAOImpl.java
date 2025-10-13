@@ -1,8 +1,8 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.repository;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.MetodoDePago;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.MetodoDePago;
 
 import jakarta.persistence.EntityManager;
 

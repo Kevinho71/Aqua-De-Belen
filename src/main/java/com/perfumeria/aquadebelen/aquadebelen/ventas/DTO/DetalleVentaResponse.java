@@ -1,8 +1,8 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.DTO;
 
-public record DetalleTransaccionResponse(
+public record DetalleVentaResponse(
 
-    Integer transaccionId,
+    Integer ventaId,
     Integer detalleId,
     String producto,
     double costoUnitario,

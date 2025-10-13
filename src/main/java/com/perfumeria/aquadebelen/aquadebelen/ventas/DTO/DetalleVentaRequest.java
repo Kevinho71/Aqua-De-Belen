@@ -1,9 +1,9 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.DTO;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public record DetalleTransaccionRequest(
+public record DetalleVentaRequest(
     @NotNull
     Integer productoId,
 
