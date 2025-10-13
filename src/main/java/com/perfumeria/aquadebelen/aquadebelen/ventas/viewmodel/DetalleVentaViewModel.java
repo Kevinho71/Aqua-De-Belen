@@ -1,6 +1,6 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel;
 
-public class DetalleTransaccionViewModel {
+public class DetalleVentaViewModel {
         String idDetalle;
         String producto;
         String costoUnitario;
@@ -8,11 +8,11 @@ public class DetalleTransaccionViewModel {
         String descuento;
         String subtotal;
 
-        public DetalleTransaccionViewModel(){
+        public DetalleVentaViewModel(){
 
         }
 
-        public DetalleTransaccionViewModel(String idDetalle, String producto, String costoUnitario, String cantidad, String descuento, String subtotal) {
+        public DetalleVentaViewModel(String idDetalle, String producto, String costoUnitario, String cantidad, String descuento, String subtotal) {
                 this.idDetalle = idDetalle;
                 this.producto = producto;
                 this.costoUnitario = costoUnitario;

@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.model;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class MetodoDePago {
     private String metodo;
 
     @OneToMany(mappedBy = "metodoDePago")
-    private List<Transaccion> transacciones;
+    private List<Venta> ventas;
 
     @Override
     public String toString() {

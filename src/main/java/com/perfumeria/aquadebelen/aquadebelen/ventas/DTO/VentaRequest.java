@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.DTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record TransaccionRequest(
+public record VentaRequest(
 
     @NotNull
     Integer clienteId,
@@ -20,7 +20,7 @@ public record TransaccionRequest(
     @NotNull
     @NotEmpty
     @Valid
-    List<DetalleTransaccionRequest> detalles
+    List<DetalleVentaRequest> detalles
 
 ) {
 

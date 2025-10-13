@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.perfumeria.aquadebelen.aquadebelen.lotes.model.Sublote;
 import com.perfumeria.aquadebelen.aquadebelen.reserva.model.DetalleReserva;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.DetalleTransaccion;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,7 +48,7 @@ public class Producto {
     private List<Sublote> sublotes;
 
     @OneToMany(mappedBy = "producto")
-    private List<DetalleTransaccion> detallesTransaccion;
+    private List<DetalleVenta> detallesVentas;
 
     @OneToMany(mappedBy = "producto")
     private List<DetalleReserva> detallesReserva;

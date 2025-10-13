@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.repository;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.repository;
 
 import org.springframework.stereotype.Repository;
 

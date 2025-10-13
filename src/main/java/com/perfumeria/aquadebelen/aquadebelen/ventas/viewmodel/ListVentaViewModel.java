@@ -1,8 +1,8 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel;
 
-public class ListTransaccionViewModel {
+public class ListVentaViewModel {
 
-    String transaccionId;
+    String ventaId;
     String cliente;
     String totalNeto;
     String conFactura;
@@ -10,15 +10,15 @@ public class ListTransaccionViewModel {
 
 
 
-    public ListTransaccionViewModel(){
+    public ListVentaViewModel(){
 
     }
 
 
 
-    public ListTransaccionViewModel(String transaccionId, String cliente, String totalNeto, String conFactura,
+    public ListVentaViewModel(String ventaId, String cliente, String totalNeto, String conFactura,
             String fecha) {
-        this.transaccionId = transaccionId;
+        this.ventaId = ventaId;
         this.cliente = cliente;
         this.totalNeto = totalNeto;
         this.conFactura = conFactura;
@@ -27,14 +27,14 @@ public class ListTransaccionViewModel {
 
 
 
-    public String getTransaccionId() {
-        return transaccionId;
+    public String getVentaId() {
+        return ventaId;
     }
 
 
 
-    public void setTransaccionId(String transaccionId) {
-        this.transaccionId = transaccionId;
+    public void setVentaId(String ventaId) {
+        this.ventaId = ventaId;
     }
 
 

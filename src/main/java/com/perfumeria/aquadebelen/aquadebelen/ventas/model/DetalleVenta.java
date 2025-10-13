@@ -1,4 +1,4 @@
-    package com.perfumeria.aquadebelen.aquadebelen.transaccion.model;
+    package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
     import com.perfumeria.aquadebelen.aquadebelen.productos.model.Producto;
 
@@ -20,8 +20,8 @@ import jakarta.persistence.Column;
     @NoArgsConstructor
     @AllArgsConstructor
     @Entity
-    @Table(name = "detalle_transaccion")
-    public class DetalleTransaccion {
+    @Table(name = "detalle_venta")
+    public class DetalleVenta {
 
         @Id
         @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -42,13 +42,13 @@ import jakarta.persistence.Column;
         private Producto producto;
 
         @ManyToOne
-        @JoinColumn(name = "transaccion_id")
-        private Transaccion transaccion;
+        @JoinColumn(name = "venta_id")
+        private Venta venta;
 
         @Override
         public String toString() {
             return "DetalleTransaccion [id=" + id + ", cantidad=" + cantidad + ", subtotal=" + subtotal + ", producto="
-                    + producto + ", transaccion=" + transaccion.getId() + "]";
+                    + producto + ", venta=" + venta.getId() + "]";
         }
 
         

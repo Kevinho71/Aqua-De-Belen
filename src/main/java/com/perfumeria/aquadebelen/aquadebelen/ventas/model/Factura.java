@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.model;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
 import java.time.LocalDateTime;
 
@@ -36,13 +36,13 @@ public class Factura {
     private String nit;
 
     @OneToOne
-    @JoinColumn(name = "transaccion_id", unique=true, nullable = false)
-    private Transaccion transaccion;
+    @JoinColumn(name = "venta_id", unique=true, nullable = false)
+    private Venta venta;
 
     @Override
     public String toString() {
         return "Factura [numero=" + numero + ", fechaEmision=" + fechaEmision + ", razonSocial=" + razonSocial
-                + ", nit=" + nit + ", transaccion=" + transaccion + "]";
+                + ", nit=" + nit + ", venta=" + venta + "]";
     }
 
     

@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.transaccion.presenter;
+package com.perfumeria.aquadebelen.aquadebelen.ventas.presenter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,16 +7,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.DetalleTransaccionResponse;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.DTO.TransaccionResponse;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.DetalleTransaccionViewModel;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.ListTransaccionViewModel;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.viewmodel.TransaccionViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaResponse;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaResponse;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.DetalleVentaViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.ListVentaViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.VentaViewModel;
 
 @Component
-public class TransaccionPresenter {
+public class VentaPresenter {
 
-    String transaccionId;
+    String ventaId;
     String cliente;
     String totalBruto;
     String descuento;
@@ -24,9 +24,9 @@ public class TransaccionPresenter {
     String conFactura;
     String fecha;
 
-    public TransaccionViewModel present(TransaccionResponse resp) {
-        TransaccionViewModel tvm = new TransaccionViewModel();
-        tvm.setTransaccionId(String.valueOf(resp.transaccionId()));
+    public VentaViewModel present(VentaResponse resp) {
+        VentaViewModel tvm = new VentaViewModel();
+        tvm.setVentaId(String.valueOf(resp.ventaId()));
         tvm.setCliente(resp.cliente().toString());
         tvm.setTotalBruto(String.valueOf(resp.totalBruto()) + " Bs");
         tvm.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
@@ -39,10 +39,10 @@ public class TransaccionPresenter {
         return tvm;
     }
 
-    public List<DetalleTransaccionViewModel> presentDetalles(List<DetalleTransaccionResponse> listResp) {
-        List<DetalleTransaccionViewModel> dtvm = new ArrayList<>();
-        for (DetalleTransaccionResponse dtr : listResp) {
-            DetalleTransaccionViewModel d = new DetalleTransaccionViewModel();
+    public List<DetalleVentaViewModel> presentDetalles(List<DetalleVentaResponse> listResp) {
+        List<DetalleVentaViewModel> dtvm = new ArrayList<>();
+        for (DetalleVentaResponse dtr : listResp) {
+            DetalleVentaViewModel d = new DetalleVentaViewModel();
             d.setIdDetalle(String.valueOf(dtr.detalleId()));
             d.setProducto(dtr.producto());
             d.setCostoUnitario(String.valueOf(dtr.costoUnitario()) + " Bs");
@@ -56,11 +56,11 @@ public class TransaccionPresenter {
         return dtvm;
     }
 
-    public List<ListTransaccionViewModel> presentList(List<TransaccionResponse> listaResp) {
-        List<ListTransaccionViewModel> lista = new ArrayList<>();
-        for (TransaccionResponse resp : listaResp) {
-            ListTransaccionViewModel listPres = new ListTransaccionViewModel();
-            listPres.setTransaccionId(String.valueOf(resp.transaccionId()));
+    public List<ListVentaViewModel> presentList(List<VentaResponse> listaResp) {
+        List<ListVentaViewModel> lista = new ArrayList<>();
+        for (VentaResponse resp : listaResp) {
+            ListVentaViewModel listPres = new ListVentaViewModel();
+            listPres.setVentaId(String.valueOf(resp.ventaId()));
             listPres.setCliente(resp.cliente());
             listPres.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
             listPres.setConFactura(formatFactura(resp.conFactura()));
@@ -92,9 +92,9 @@ public class TransaccionPresenter {
     // ====================================================================================================================
     // CONSTRUCTORES, GETTERS Y SETTERS
 
-    public TransaccionPresenter(String transaccionId, String cliente, String totalBruto, String descuento,
+    public VentaPresenter(String ventaId, String cliente, String totalBruto, String descuento,
             String totalNeto, String conFactura, String fecha) {
-        this.transaccionId = transaccionId;
+        this.ventaId = ventaId;
         this.cliente = cliente;
         this.totalBruto = totalBruto;
         this.descuento = descuento;
@@ -103,16 +103,16 @@ public class TransaccionPresenter {
         this.fecha = fecha;
     }
 
-    public TransaccionPresenter() {
+    public VentaPresenter() {
 
     }
 
-    public String getTransaccionId() {
-        return transaccionId;
+    public String getVentaId() {
+        return ventaId;
     }
 
-    public void setTransaccionId(String transaccionId) {
-        this.transaccionId = transaccionId;
+    public void setVentaId(String ventaId) {
+        this.ventaId = ventaId;
     }
 
     public String getCliente() {
