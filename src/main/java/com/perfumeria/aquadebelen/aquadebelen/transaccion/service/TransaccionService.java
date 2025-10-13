@@ -129,8 +129,4 @@ public class TransaccionService {
                 transaccion.isConFactura(), transaccion.getFecha(), listResp);
     }
 
-    public List<DetalleTransaccionResponse> listarDetalles(Integer id) {
-        return null;
-    }
-
 }
