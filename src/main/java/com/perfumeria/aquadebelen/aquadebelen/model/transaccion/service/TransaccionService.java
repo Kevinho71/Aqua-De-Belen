@@ -1,6 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.model.transaccion.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
@@ -60,8 +59,10 @@ public class TransaccionService {
 
             //AQUI CREAMOS UN NUEVO PRODUCTO CON EL FIN DE HALLAR SU PRECIO Y VAMOS CALCULANDO EL TOTAL BRUTO
             Producto producto = pDAO.findById(dt.productoId());
-            double subtotal=producto.getPrecio()*dt.cantidad();
-            totalBruto = totalBruto+subtotal;
+            // Evitar NullPointerException si el precio es null
+            double precio = (producto.getPrecio() != null) ? producto.getPrecio() : 0.0;
+            double subtotal = precio * dt.cantidad();
+            totalBruto += subtotal;
             
             //AQUI ASIGNAMOS LOS DETALLES DEL DTO A NUEVAS ENTIDADES DETALLES Y LUEGE SETTEAMOS UNO POR UNO A LA TRANSACCION
             DetalleTransaccion detalle = new DetalleTransaccion();
