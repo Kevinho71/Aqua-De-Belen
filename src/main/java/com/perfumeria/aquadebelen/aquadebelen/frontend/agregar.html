@@ -1,0 +1,41 @@
+<script>
+  // Carga combo de categorías (TipoProducto)
+  async function cargarCategorias() {
+    const res = await fetch('/api/productos/categorias');
+    const cats = await res.json();
+    const sel = document.getElementById('select-categoria');
+    sel.innerHTML = cats.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+  }
+
+  async function crearProducto(ev) {
+    ev.preventDefault();
+    const nombre = document.getElementById('input-nombre').value.trim();
+    const marca = document.getElementById('input-marca').value.trim(); // va a descripcion
+    const precio = parseFloat(document.getElementById('input-precio').value || '0');
+    const tipoProductoId = parseInt(document.getElementById('select-categoria').value);
+
+    const payload = {
+      name: nombre,
+      brandOrDescription: marca,
+      price: precio,
+      tipoProductoId: tipoProductoId
+    };
+
+    const r = await fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (r.ok) {
+      alert('Producto creado');
+      (document.getElementById('form-agregar')).reset();
+    } else {
+      const text = await r.text();
+      alert('Error al crear producto: ' + text);
+    }
+  }
+
+  cargarCategorias();
+  document.getElementById('form-agregar').addEventListener('submit', crearProducto);
+</script>

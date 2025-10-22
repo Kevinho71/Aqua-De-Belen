@@ -1,0 +1,22 @@
+<script>
+  const bs = v => `Bs ${Number(v||0).toFixed(2)}`;
+  async function cargarCategorias() {
+    const res = await fetch('/api/categorias/cards');
+    const cats = await res.json();
+    const host = document.getElementById('cards-categorias');
+    host.innerHTML = '';
+    cats.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'card categoria';
+      card.innerHTML = `
+        <div class="card-title">${c.nombre}</div>
+        <div class="grid-2">
+          <div><small>Productos</small><div class="value">${c.productos}</div></div>
+          <div><small>Stock Total</small><div class="value">${c.stockTotal}</div></div>
+        </div>
+        <div class="mt"><small>Ingresos</small><div class="value">${bs(c.ingresosBs)}</div></div>`;
+      host.appendChild(card);
+    });
+  }
+  cargarCategorias();
+</script>

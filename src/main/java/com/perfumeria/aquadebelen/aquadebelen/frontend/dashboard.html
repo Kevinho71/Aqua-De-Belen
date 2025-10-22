@@ -1,0 +1,29 @@
+<script>
+  const bs = v => `Bs ${Number(v||0).toFixed(2)}`;
+
+  async function cargarDashboard() {
+    // Resumen
+    const res = await fetch('/api/dashboard/resumen');
+    const r = await res.json();
+    document.getElementById('card-total-productos').textContent = r.totalProductos;
+    document.getElementById('card-stock-bajo').textContent = r.stockBajo;
+    document.getElementById('card-ventas-totales').textContent = bs(r.ventasTotales);
+    document.getElementById('card-ventas-hoy').textContent = r.ventasHoy;
+
+    // Ventas recientes
+    const vres = await fetch('/api/dashboard/recientes?limit=4');
+    const recientes = await vres.json();
+    const tbody = document.getElementById('tabla-recientes-body');
+    tbody.innerHTML = '';
+    recientes.forEach(x => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${x.productoNombreEjemplo}</td>
+        <td>${x.unidades}</td>
+        <td>${bs(x.total)}</td>
+        <td>${new Date(x.fecha).toLocaleDateString()}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  cargarDashboard();
+</script>

@@ -1,0 +1,63 @@
+<script>
+  const bs = v => `Bs ${Number(v||0).toFixed(2)}`;
+
+  async function registrarVenta(ev) {
+    ev.preventDefault();
+    const payload = {
+      clienteId: parseInt(document.getElementById('cli-id').value),
+      metodoDePagoId: parseInt(document.getElementById('met-id').value),
+      descuento: parseFloat(document.getElementById('descuento').value||'0'),
+      conFactura: document.getElementById('con-factura').value === 'si',
+      detalles: [
+        {
+          productoId: parseInt(document.getElementById('prod-id').value),
+          cantidad: parseInt(document.getElementById('cantidad').value||'1')
+        }
+      ]
+    };
+
+    const r = await fetch('/api/transacciones/registrar', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!r.ok) {
+      const t = await r.text();
+      alert('Error al registrar: ' + t);
+      return;
+    }
+    await cargarResumenVentas();
+    await cargarHistorial();
+    (document.getElementById('form-ventas')).reset();
+  }
+
+  async function cargarResumenVentas() {
+    // Reutilizamos /api/dashboard/resumen para totales
+    const r = await fetch('/api/dashboard/resumen').then(x => x.json());
+    document.getElementById('total-ventas').textContent = r.ventasHoy;
+    document.getElementById('unidades-vendidas').textContent = '-'; // (si necesitas exacto, creo un endpoint aparte)
+    document.getElementById('ingresos-totales').textContent = bs(r.ventasTotales);
+  }
+
+  async function cargarHistorial() {
+    // Usamos /api/dashboard/recientes?limit=20
+    const items = await fetch('/api/dashboard/recientes?limit=20').then(x => x.json());
+    const tbody = document.getElementById('tabla-historial-body');
+    tbody.innerHTML = '';
+    items.forEach(i => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i.productoNombreEjemplo}</td>
+        <td>${i.unidades}</td>
+        <td>${bs(i.total / Math.max(i.unidades,1))}</td>
+        <td>${bs(i.total)}</td>
+        <td>${new Date(i.fecha).toLocaleDateString()}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('form-ventas').addEventListener('submit', registrarVenta);
+  cargarResumenVentas();
+  cargarHistorial();
+</script>
